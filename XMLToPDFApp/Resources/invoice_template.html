@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="es">
+  <head>
+  	<meta charset="utf-8"></meta>
+  	<style type="text/css">
+  		
+  		.data_header {
+  			height: 100%;
+  			border-collapse: collapse;
+  			border: 1px solid black;
+  			font-size: 15px;
+  			padding: 8px;
+  		}
+
+  		.doc_header_info td{
+  			padding: 6px;
+  		}
+
+  		table.border{
+  			border-collapse: collapse;
+  		}
+
+  		table.border th{
+  			padding: 5px;
+  			border: 1px solid black;
+  		}
+
+  		table.border td{
+  			padding: 5px;
+  			border: 1px solid black;
+  		}
+
+  	</style>
+    <title>@DOCUMENT_ID</title>
+  </head>
+  <body>
+  	<table border=0 style="width:100%">
+
+  		<tr>
+  			<td style="width:32%"></td>
+  			<td style="width:26%" align="left">
+  				<table style="font-size: 10px;">
+  					<tr><td align="left" style="font-weight: bold;">@H_BUSSINESS_NAME</td></tr>
+  					<tr><td align="left">@H_ADDRESS_1</td></tr>
+  					<tr><td align="left">@H_ADDRESS_2</td></tr>
+  					<tr><td align="left">@H_ADDRESS_3</td></tr>
+  				</table>
+  			</td>
+  			<td style="width:42%;">
+  				<table class="data_header" style="width:100%;">
+  					<tr><td align="center" style="padding-top: 20px;">R.U.C. @H_BUSSINESS_ID</td></tr>
+  					<tr><td align="center" style="padding-top: 20px;">@H_DOCUMENT_TITLE</td></tr>
+  					<tr><td align="center" style="font-weight: bold;padding-top: 20px; padding-bottom: 20px;">@DOCUMENT_ID</td></tr>
+  				</table>
+  			</td>
+  		</tr>
+
+  		<tr><td colspan="3" height="20"></td></tr>
+
+  		<tr>
+  			<td colspan="3">
+  				<table class="doc_header_info" style="width:100%; font-size: 11px; border: 1px solid black;">
+  					<tr>
+  						<td style="width: 8%;">RUC:</td>
+  						<td style="width: 50%;">@CUSTOMER_ID</td>
+  						<td style="width: 18%;">Fecha de Emisión:</td>
+  						<td style="width: 22%;">@ISSUE_DATE</td>
+  					</tr>
+  					<tr>
+  						<td>Razón Social:</td>
+  						<td>@CUSTOMER_NAME</td>
+  						<td>Fecha de Vencimiento:</td>
+  						<td>@DUE_DATE</td>
+  					</tr>
+  					<tr>
+  						<td>Dirección:</td>
+  						<td>@CUSTOMER_ADDRESS_LINE</td>
+  						<td></td><td></td>
+  					</tr>
+  					<tr>
+  						<td>Moneda:</td>
+  						<td>@CURRENCY_NAME</td>
+  						<td></td><td></td>
+  					</tr>
+  					
+  				</table>
+  			</td>
+  		</tr>
+
+  		<tr><td colspan="3" height="20"></td></tr>
+
+  		<tr>
+  			<td colspan="3">
+  				<table class="border" style="width:100%;font-size: 10px;">
+  					<thead>
+  						<tr style="font-size: 9px;">
+  							<th style="width: 8%;" align="center">Cantidad</th>
+  							<th style="width: 8%;" align="center">Código</th>
+  							<th style="width: 69%;" align="center">Descripción</th>
+  							<th style="width: 15%;" align="center">Valor Unitario</th>
+  						</tr>
+  					</thead>
+  					<tbody>
+  						@DOCUMENT_DETAIL
+  					</tbody>
+  				</table>
+
+  			</td>	
+  		</tr>
+
+  		<tr><td colspan="3" height="20"></td></tr>
+
+  		<tr>
+  			<td colspan="2" style="width:20%; border: 0px !important; vertical-align: top;">
+  				<table style="font-size: 11px;">
+  					<tr>
+  						<td style="font-weight: bold;">@TEXT_PAYABLE_AMOUNT</td>
+  					</tr>
+  					<tr><td height="15"></td></tr>
+  					<tr>
+  						<td>@DOCUMENT_OBSERVATIONS</td>
+  					</tr>
+  					<tr><td height="20"></td></tr>
+  					<tr>
+  						<td align="center">@DIGEST_VALUE<br></br>Código Hash</td>
+  					</tr>
+  				</table>
+  			</td>
+  			<td>
+  				<table class="border" style="width:100%;font-size:11px">
+  					<tr>
+							<td align="right">Sub Total Ventas:</td>
+							<td align="right">@DOCUMENT_SUBTOTAL</td>
+						</tr>
+						<tr>
+							<td align="right">Anticipos:</td>
+							<td align="right">@DOCUMENT_PREPAID_AMOUNT</td>
+						</tr>
+						<tr>
+							<td align="right">Descuentos:</td>
+							<td align="right">@DOCUMENT_DISCOUNTS</td>
+						</tr>
+						<tr>
+							<td align="right">Valor de Venta:</td>
+							<td align="right">@DOCUMENT_LINE_EXTENSION_AMOUNT</td>
+						</tr>
+						<tr>
+							<td align="right">ISC:</td>
+							<td align="right">@DOCUMENT_OTHERS_CHARGES</td>
+						</tr>
+						<tr>
+							<td align="right">IGV:</td>
+							<td align="right">@DOCUMENT_TAX_AMOUNT</td>
+						</tr>
+						<tr>
+							<td align="right">Otros Cargos:</td>
+							<td align="right">@DOCUMENT_OTHERS_CHARGES</td>
+						</tr>
+						<tr>
+							<td align="right">Otros Tributos:</td>
+							<td align="right">@DOCUMENT_OTHERS_CHARGES</td>
+						</tr>
+						<tr>
+							<td align="right">Monto de Redondeo:</td>
+							<td align="right">@DOCUMENT_OTHERS_CHARGES</td>
+						</tr>
+						<tr>
+							<td align="right">Importe Total:</td>
+							<td align="right">@DOCUMENT_PAYABLE_AMOUNT</td>
+						</tr>
+  				</table>
+  			</td>
+  		</tr>
+  		<tr><td colspan="3" height="20"></td></tr>
+  	</table>
+
+  </body>
+</html>

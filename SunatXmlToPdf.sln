@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32112.339
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XMLToPDFApp", "XMLToPDFApp\XMLToPDFApp.csproj", "{48A5EB94-AD76-4D15-8270-095701510BE9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{48A5EB94-AD76-4D15-8270-095701510BE9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{48A5EB94-AD76-4D15-8270-095701510BE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{48A5EB94-AD76-4D15-8270-095701510BE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{48A5EB94-AD76-4D15-8270-095701510BE9}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8FD1F9A0-B1C2-4FD0-B85B-DEC6E05D7E48}
+	EndGlobalSection
+EndGlobal
