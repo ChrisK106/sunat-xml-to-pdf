@@ -57,7 +57,7 @@ namespace XMLToPDFApp
 
             if (updateInfo != null)
             {
-                updateVersion = updateInfo.FutureReleaseEntry.Version.Version.ToString();
+                updateVersion = updateInfo.FutureReleaseEntry.Version.SpecialVersion;
                 updateSize = updateInfo.FutureReleaseEntry.Filesize.ToString() + " bytes";
 
                 if(MessageBox.Show("¿Desea descargar e instalar la actualización? \nVersión: " + updateVersion + " (" + updateSize + ")", "Actualización Disponible", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
