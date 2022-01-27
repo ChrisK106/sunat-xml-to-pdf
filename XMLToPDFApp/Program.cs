@@ -20,12 +20,14 @@ namespace XMLToPDFApp
                 onAppUninstall: OnAppUninstall,
                 onEveryRun: OnAppRun);
 
+            Task task = UpdateMyApp();
+
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 
             Application.SetHighDpiMode(HighDpiMode.SystemAware);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new AppForm());
+            Application.Run(new AppForm()); 
         }
 
         private static void OnAppInstall(SemanticVersion version, IAppTools tools)
@@ -43,8 +45,6 @@ namespace XMLToPDFApp
             tools.SetProcessAppUserModelId();
             // show a welcome message when the app is first installed
             if (firstRun) MessageBox.Show("La aplicación 'SUNAT XML To PDF' ha sido instalada con éxito");
-
-            _ = UpdateMyApp();
         }
 
         private static async Task UpdateMyApp()
@@ -57,7 +57,10 @@ namespace XMLToPDFApp
 
             if (updateInfo != null)
             {
-                updateVersion = updateInfo.FutureReleaseEntry.Version.SpecialVersion;
+                updateVersion = updateInfo.FutureReleaseEntry.Version.Version.Major + "."
+                    + updateInfo.FutureReleaseEntry.Version.Version.Minor + "."
+                    + updateInfo.FutureReleaseEntry.Version.Version.Revision;
+
                 updateSize = updateInfo.FutureReleaseEntry.Filesize.ToString() + " bytes";
 
                 if(MessageBox.Show("¿Desea descargar e instalar la actualización? \nVersión: " + updateVersion + " (" + updateSize + ")", "Actualización Disponible", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
