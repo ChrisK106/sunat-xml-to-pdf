@@ -44,7 +44,7 @@ namespace XMLToPDFApp
         {
             tools.SetProcessAppUserModelId();
             // show a welcome message when the app is first installed
-            if (firstRun) MessageBox.Show("La aplicación 'SUNAT XML To PDF' ha sido instalada con éxito");
+            if (firstRun) MessageBox.Show("La aplicación 'SUNAT XML To PDF' ha sido instalada con éxito","Instalación completada");
         }
 
         private static async Task UpdateMyApp()
