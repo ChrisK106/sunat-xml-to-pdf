@@ -42,14 +42,14 @@ namespace XMLToPDFApp
         {
             tools.SetProcessAppUserModelId();
             // show a welcome message when the app is first installed
-            if (firstRun) MessageBox.Show("La aplicación SUNAT XMLToPDF ha sido instalada con éxito");
+            if (firstRun) MessageBox.Show("La aplicación 'SUNAT XML To PDF' ha sido instalada con éxito");
 
             _ = UpdateMyApp();
         }
 
         private static async Task UpdateMyApp()
         {
-            using var mgr = new GithubUpdateManager("https://github.com/ChrisK106/SUNAT_XMLToPDF", false, null);
+            using var mgr = new GithubUpdateManager("https://github.com/ChrisK106/sunat-xml-to-pdf", false, null);
 
             var updateInfo = await mgr.CheckForUpdate();
 
