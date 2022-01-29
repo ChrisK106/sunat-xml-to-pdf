@@ -15,7 +15,7 @@ namespace XMLToPDFApp
 
         static void Main()
         {
-            // run Squirrel first, as the app may exit after these run
+            // Run Squirrel first, as the app may exit after these run
             SquirrelAwareApp.HandleEvents(
                 onInitialInstall: OnAppInstall,
                 onAppUninstall: OnAppUninstall,
@@ -34,21 +34,19 @@ namespace XMLToPDFApp
 
         private static void OnAppInstall(SemanticVersion version, IAppTools tools)
         {
-            tools.CreateShortcutForThisExe(ShortcutLocation.StartMenu | ShortcutLocation.Desktop);
-            tools.CreateUninstallerRegistryEntry();
+            tools.CreateShortcutForThisExe(ShortcutLocation.StartMenuRoot | ShortcutLocation.Desktop);
         }
 
         private static void OnAppUninstall(SemanticVersion version, IAppTools tools)
         {
-            tools.RemoveShortcutForThisExe(ShortcutLocation.StartMenu | ShortcutLocation.Desktop);
-            tools.RemoveUninstallerRegistryEntry();
+            tools.RemoveShortcutForThisExe(ShortcutLocation.StartMenuRoot | ShortcutLocation.Desktop);
         }
 
         private static void OnAppRun(SemanticVersion version, IAppTools tools, bool firstRun)
         {
             tools.SetProcessAppUserModelId();
-            // show a welcome message when the app is first installed
-            if (firstRun) MessageBox.Show("La aplicación ha sido instalada con éxito", "SUNAT XML ToPDF");
+            // Show a welcome message when the app is first installed
+            if (firstRun) MessageBox.Show("La aplicación ha sido instalada con éxito", "SUNAT XML a PDF");
         }
 
         private static async Task UpdateMyApp()
