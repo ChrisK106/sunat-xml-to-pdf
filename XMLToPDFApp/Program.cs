@@ -12,6 +12,7 @@ namespace XMLToPDFApp
         ///  The main entry point for the application.
         /// </summary>
         [STAThread]
+
         static void Main()
         {
             // run Squirrel first, as the app may exit after these run
@@ -20,31 +21,34 @@ namespace XMLToPDFApp
                 onAppUninstall: OnAppUninstall,
                 onEveryRun: OnAppRun);
 
-            Task task = UpdateMyApp();
-
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 
             Application.SetHighDpiMode(HighDpiMode.SystemAware);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new AppForm()); 
+
+            _ = UpdateMyApp();
+
+            Application.Run(new AppForm());
         }
 
         private static void OnAppInstall(SemanticVersion version, IAppTools tools)
         {
             tools.CreateShortcutForThisExe(ShortcutLocation.StartMenu | ShortcutLocation.Desktop);
+            tools.CreateUninstallerRegistryEntry();
         }
 
         private static void OnAppUninstall(SemanticVersion version, IAppTools tools)
         {
             tools.RemoveShortcutForThisExe(ShortcutLocation.StartMenu | ShortcutLocation.Desktop);
+            tools.RemoveUninstallerRegistryEntry();
         }
 
         private static void OnAppRun(SemanticVersion version, IAppTools tools, bool firstRun)
         {
             tools.SetProcessAppUserModelId();
             // show a welcome message when the app is first installed
-            if (firstRun) MessageBox.Show("La aplicación 'SUNAT XML To PDF' ha sido instalada con éxito","Instalación completada");
+            if (firstRun) MessageBox.Show("La aplicación ha sido instalada con éxito", "SUNAT XML ToPDF");
         }
 
         private static async Task UpdateMyApp()
@@ -53,27 +57,21 @@ namespace XMLToPDFApp
 
             var updateInfo = await mgr.CheckForUpdate();
 
-            string updateVersion, updateSize = null;
-
-            if (updateInfo != null)
+            if (updateInfo.ReleasesToApply.Count > 0)
             {
-                updateVersion = updateInfo.FutureReleaseEntry.Version.Version.Major + "."
-                    + updateInfo.FutureReleaseEntry.Version.Version.Minor + "."
-                    + updateInfo.FutureReleaseEntry.Version.Version.Revision;
+                string updateVersion = updateInfo.FutureReleaseEntry.Version.ToString();
+                string updateSize = ((updateInfo.FutureReleaseEntry.Filesize / 1024f) / 1024f).ToString("0.00") + " MB";
 
-                updateSize = updateInfo.FutureReleaseEntry.Filesize.ToString() + " bytes";
-
-                if(MessageBox.Show("¿Desea descargar e instalar la actualización? \nVersión: " + updateVersion + " (" + updateSize + ")", "Actualización Disponible", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                if (MessageBox.Show(null,"¿Desea descargar e instalar la actualización?\nVersión: " + updateVersion + " (" + updateSize + ")",
+                    "Actualización Disponible", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
-                    var newVersion = await mgr.UpdateApp();
+                    await mgr.DownloadReleases(updateInfo.ReleasesToApply);
+                    await mgr.ApplyReleases(updateInfo);
 
-                    // optionally restart the app automatically, or ask the user if/when they want to restart
-                    if (newVersion != null)
-                    {
-                        UpdateManager.RestartApp();
-                    }
+                    UpdateManager.RestartApp();
                 }
             }
         }
+
     }
 }
