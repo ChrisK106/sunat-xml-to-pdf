@@ -10,28 +10,34 @@ namespace XMLToPDFApp
     {
         public List<T> dataCollection = new();
         public string path;
+        public static string databaseDirectory = Path.Combine("..", "data");
+        public string imgDirectory = Path.Combine(databaseDirectory, "img");
 
-        public Database(string filePath)
+        public Database(string filename)
         {
-            path = filePath;
+            path = Path.Combine(databaseDirectory, filename);
+
+            // Checking if required directories exist
+            if (!Directory.Exists(databaseDirectory)) Directory.CreateDirectory(databaseDirectory);
+            if (!Directory.Exists(imgDirectory)) Directory.CreateDirectory(imgDirectory);
         }
 
         public void Save()
         {
-            string texto = JsonConvert.SerializeObject(dataCollection);
-            File.WriteAllText(path, texto);
+            string dataString = JsonConvert.SerializeObject(dataCollection);
+            File.WriteAllText(path, dataString);
         }
 
         public void Load()
         {
-            try
+            if (File.Exists(path))
             {
-                string archivo = File.ReadAllText(path);
-                dataCollection = JsonConvert.DeserializeObject<List<T>>(archivo);
+                string dataString = File.ReadAllText(path);
+                dataCollection = JsonConvert.DeserializeObject<List<T>>(dataString);
             }
-            catch (Exception)
+            else
             {
-
+                dataCollection = new List<T>();
             }
         }
 

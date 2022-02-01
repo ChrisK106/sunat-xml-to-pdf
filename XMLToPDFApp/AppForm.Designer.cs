@@ -41,7 +41,7 @@ namespace XMLToPDFApp
             this.btnSelectFolder = new System.Windows.Forms.Button();
             this.chkOpenGeneratedPDF = new System.Windows.Forms.CheckBox();
             this.lblStatus = new System.Windows.Forms.Label();
-            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.gbxBusinessData = new System.Windows.Forms.GroupBox();
             this.pbxBusinessLogo = new System.Windows.Forms.PictureBox();
             this.btnSelectLogo = new System.Windows.Forms.Button();
             this.label9 = new System.Windows.Forms.Label();
@@ -68,7 +68,7 @@ namespace XMLToPDFApp
             this.cbxBusinessList = new System.Windows.Forms.ComboBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
-            this.groupBox5.SuspendLayout();
+            this.gbxBusinessData.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbxBusinessLogo)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -186,28 +186,28 @@ namespace XMLToPDFApp
             this.lblStatus.TabIndex = 5;
             this.lblStatus.Text = "lblStatus";
             // 
-            // groupBox5
+            // gbxBusinessData
             // 
-            this.groupBox5.Controls.Add(this.pbxBusinessLogo);
-            this.groupBox5.Controls.Add(this.btnSelectLogo);
-            this.groupBox5.Controls.Add(this.label9);
-            this.groupBox5.Controls.Add(this.txtLogoPath);
-            this.groupBox5.Controls.Add(this.txtBusinessAdd3);
-            this.groupBox5.Controls.Add(this.label7);
-            this.groupBox5.Controls.Add(this.txtBusinessAdd2);
-            this.groupBox5.Controls.Add(this.label6);
-            this.groupBox5.Controls.Add(this.txtBusinessAdd1);
-            this.groupBox5.Controls.Add(this.label5);
-            this.groupBox5.Controls.Add(this.txtBusinessName);
-            this.groupBox5.Controls.Add(this.label4);
-            this.groupBox5.Controls.Add(this.txtBusinessID);
-            this.groupBox5.Controls.Add(this.label3);
-            this.groupBox5.Location = new System.Drawing.Point(15, 53);
-            this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(778, 264);
-            this.groupBox5.TabIndex = 2;
-            this.groupBox5.TabStop = false;
-            this.groupBox5.Text = "Datos de Empresa";
+            this.gbxBusinessData.Controls.Add(this.pbxBusinessLogo);
+            this.gbxBusinessData.Controls.Add(this.btnSelectLogo);
+            this.gbxBusinessData.Controls.Add(this.label9);
+            this.gbxBusinessData.Controls.Add(this.txtLogoPath);
+            this.gbxBusinessData.Controls.Add(this.txtBusinessAdd3);
+            this.gbxBusinessData.Controls.Add(this.label7);
+            this.gbxBusinessData.Controls.Add(this.txtBusinessAdd2);
+            this.gbxBusinessData.Controls.Add(this.label6);
+            this.gbxBusinessData.Controls.Add(this.txtBusinessAdd1);
+            this.gbxBusinessData.Controls.Add(this.label5);
+            this.gbxBusinessData.Controls.Add(this.txtBusinessName);
+            this.gbxBusinessData.Controls.Add(this.label4);
+            this.gbxBusinessData.Controls.Add(this.txtBusinessID);
+            this.gbxBusinessData.Controls.Add(this.label3);
+            this.gbxBusinessData.Location = new System.Drawing.Point(15, 53);
+            this.gbxBusinessData.Name = "gbxBusinessData";
+            this.gbxBusinessData.Size = new System.Drawing.Size(778, 264);
+            this.gbxBusinessData.TabIndex = 2;
+            this.gbxBusinessData.TabStop = false;
+            this.gbxBusinessData.Text = "Datos de Empresa";
             // 
             // pbxBusinessLogo
             // 
@@ -376,7 +376,7 @@ namespace XMLToPDFApp
             this.tabPage2.Controls.Add(this.btnBusinessNew);
             this.tabPage2.Controls.Add(this.label8);
             this.tabPage2.Controls.Add(this.cbxBusinessList);
-            this.tabPage2.Controls.Add(this.groupBox5);
+            this.tabPage2.Controls.Add(this.gbxBusinessData);
             this.tabPage2.Location = new System.Drawing.Point(4, 24);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
@@ -449,8 +449,8 @@ namespace XMLToPDFApp
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
-            this.groupBox5.ResumeLayout(false);
-            this.groupBox5.PerformLayout();
+            this.gbxBusinessData.ResumeLayout(false);
+            this.gbxBusinessData.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbxBusinessLogo)).EndInit();
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
@@ -475,7 +475,7 @@ namespace XMLToPDFApp
         private System.Windows.Forms.Button btnSelectFolder;
         private System.Windows.Forms.CheckBox chkOpenGeneratedPDF;
         private System.Windows.Forms.Label lblStatus;
-        private System.Windows.Forms.GroupBox groupBox5;
+        private System.Windows.Forms.GroupBox gbxBusinessData;
         private System.Windows.Forms.TextBox txtBusinessID;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox txtBusinessAdd3;

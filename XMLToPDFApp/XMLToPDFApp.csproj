@@ -9,7 +9,7 @@
     <Company></Company>
     <Description>SUNAT XML To PDF - Desktop Application</Description>
     <Copyright>Christian Cano</Copyright>
-    <AssemblyVersion>0.9.4</AssemblyVersion>
+    <AssemblyVersion>1.0.0</AssemblyVersion>
     <FileVersion>$(AssemblyVersion)</FileVersion>
     <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
     <PlatformTarget>AnyCPU</PlatformTarget>
