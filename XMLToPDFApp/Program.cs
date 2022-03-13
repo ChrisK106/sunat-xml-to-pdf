@@ -1,8 +1,8 @@
+using Squirrel;
 using System;
 using System.Text;
-using System.Windows.Forms;
 using System.Threading.Tasks;
-using Squirrel;
+using System.Windows.Forms;
 
 namespace XMLToPDFApp
 {
@@ -60,7 +60,7 @@ namespace XMLToPDFApp
                 string updateVersion = updateInfo.FutureReleaseEntry.Version.ToString();
                 string updateSize = ((updateInfo.FutureReleaseEntry.Filesize / 1024f) / 1024f).ToString("0.00") + " MB";
 
-                if (MessageBox.Show(null,"¿Desea descargar e instalar la actualización?\nVersión: " + updateVersion + " (" + updateSize + ")",
+                if (MessageBox.Show(null, "¿Desea descargar e instalar la actualización?\nVersión: " + updateVersion + " (" + updateSize + ")",
                     "Actualización Disponible", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
                     await mgr.DownloadReleases(updateInfo.ReleasesToApply);
@@ -69,6 +69,8 @@ namespace XMLToPDFApp
                     UpdateManager.RestartApp();
                 }
             }
+
+            mgr.Dispose();
         }
 
     }

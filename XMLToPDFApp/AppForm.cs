@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Windows.Forms;
-using System.IO;
-using System.Xml;
-using System.Data;
-using System.Diagnostics;
-using iTextSharp.text;
+﻿using iTextSharp.text;
 using iTextSharp.text.pdf;
 using iTextSharp.tool.xml;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Diagnostics;
+using System.IO;
+using System.Windows.Forms;
+using System.Xml;
 
 namespace XMLToPDFApp
 {
@@ -109,7 +109,7 @@ namespace XMLToPDFApp
                         }
                     }
                 }
-                                
+
                 string htmlSource = string.Empty;
                 string documentTitle = string.Empty;
                 string customerTypeCode = string.Empty;
@@ -194,7 +194,7 @@ namespace XMLToPDFApp
                     line.priceAmount = invoiceLine.GetElementsByTagName("cac:Price")[0]["cbc:PriceAmount"].InnerText;
                     documentDetail.Add(line);
                 }
-            
+
                 Business selectedBusiness = dbBusiness.Search(x => x.id == cbxSelectedBusiness.SelectedValue.ToString())[0];
 
                 string headerBusinessID = selectedBusiness.id;
@@ -337,7 +337,8 @@ namespace XMLToPDFApp
 
                 string pdfFilePath = Path.Combine(txtPDFPath.Text, documentId + "_" + supplierId + "_" + DateTime.Now.ToString("ddMMyy_HHmmss") + ".pdf");
 
-                using (FileStream stream = new(pdfFilePath, FileMode.Create)) {
+                using (FileStream stream = new(pdfFilePath, FileMode.Create))
+                {
                     Document pdfDoc = new(PageSize.A4, 25, 25, 25, 25);
 
                     PdfWriter writer = PdfWriter.GetInstance(pdfDoc, stream);
@@ -359,12 +360,12 @@ namespace XMLToPDFApp
                         float yAxisAdjustment = (95f - headerImage.ScaledHeight) / 2f;
 
                         headerImage.SetAbsolutePosition(pdfDoc.LeftMargin + xAxisAdjustment, pdfDoc.Top - headerImage.ScaledHeight - 2f - yAxisAdjustment);
-                        
+
                         pdfDoc.Add(headerImage);
                     }
 
                     string documentIdSeries = documentId.Substring(0, documentId.Length - documentId.IndexOf("-") + 1);
-                    string documentIdNumber = documentId.Substring(documentId.IndexOf("-") +1);
+                    string documentIdNumber = documentId.Substring(documentId.IndexOf("-") + 1);
 
                     string qrCodeString = headerBusinessID + "|" + invoiceTypeCode + "|" + documentIdSeries + "|" + documentIdNumber + "|" +
                         taxAmount + "|" + payableAmount + "|" + issueDate + "|" + customerTypeCode + "|" + customerId + "|";
@@ -373,7 +374,7 @@ namespace XMLToPDFApp
                     Image qrCodeImage = qrCode.GetImage();
                     qrCodeImage.ScaleAbsolute(120, 120);
                     //qrCodeImage.Alignment = Image.UNDERLYING;
-                    qrCodeImage.SetAbsolutePosition((pdfDoc.Right + pdfDoc.RightMargin)/2 - 60, pdfDoc.Bottom + 35);
+                    qrCodeImage.SetAbsolutePosition((pdfDoc.Right + pdfDoc.RightMargin) / 2 - 60, pdfDoc.Bottom + 35);
 
                     pdfDoc.Add(qrCodeImage);
 
@@ -386,7 +387,7 @@ namespace XMLToPDFApp
                     stream.Close();
                 };
 
-                    lblStatus.Text = "PDF generado en... " + pdfFilePath;
+                lblStatus.Text = "PDF generado en... " + pdfFilePath;
 
                 if (chkOpenGeneratedPDF.Checked)
                 {
@@ -404,7 +405,7 @@ namespace XMLToPDFApp
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show(this, ex.Message, "Error al intentar abrir PDF generado", MessageBoxButtons.OK, 
+                        MessageBox.Show(this, ex.Message, "Error al intentar abrir PDF generado", MessageBoxButtons.OK,
                             MessageBoxIcon.Error);
                     }
                 }
@@ -421,10 +422,10 @@ namespace XMLToPDFApp
         private void btnSelectFolder_Click(object sender, EventArgs e)
         {
             FolderBrowserDialog folderBrowserDialog = new();
-            
+
             if (folderBrowserDialog.ShowDialog() == DialogResult.OK)
             {
-                txtPDFPath.Text=folderBrowserDialog.SelectedPath;
+                txtPDFPath.Text = folderBrowserDialog.SelectedPath;
             }
         }
 
@@ -468,7 +469,7 @@ namespace XMLToPDFApp
 
             cbxSelectedBusiness.DisplayMember = "name";
             cbxSelectedBusiness.ValueMember = "id";
-            cbxSelectedBusiness.DataSource = dt; 
+            cbxSelectedBusiness.DataSource = dt;
         }
 
         private void btnBusinessNew_Click(object sender, EventArgs e)
@@ -503,7 +504,7 @@ namespace XMLToPDFApp
 
             if (btnBusinessEdit.Text == "Guardar")
             {
-                string logoName = string.Empty; 
+                string logoName = string.Empty;
 
                 if (!txtLogoPath.Text.Trim().Equals("(Sin Imagen Cargada)"))
                 {
@@ -622,7 +623,7 @@ namespace XMLToPDFApp
             else
             {
                 LoadBusinessList();
-                
+
                 btnBusinessEdit.Text = "Editar";
                 btnBusinessDelete.Text = "Eliminar";
                 btnBusinessNew.Enabled = true;
@@ -693,7 +694,7 @@ namespace XMLToPDFApp
             }
             else
             {
-                XmlElement xmlElement = (XmlElement) xmlNodeList[0];
+                XmlElement xmlElement = (XmlElement)xmlNodeList[0];
 
                 xmlNodeList = xmlElement.GetElementsByTagName(tagName);
 
@@ -704,9 +705,9 @@ namespace XMLToPDFApp
                 else
                 {
                     return xmlNodeList[0].InnerText;
-                }          
+                }
             }
         }
 
     }
- }
+}

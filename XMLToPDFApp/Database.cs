@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Newtonsoft.Json;
 
 namespace XMLToPDFApp
 {
@@ -60,7 +60,7 @@ namespace XMLToPDFApp
         public void Update(Func<T, bool> query, T newEntity)
         {
             dataCollection = dataCollection.Select(x =>
-            {   
+            {
                 if (query(x)) x = newEntity;
                 return x;
             }).ToList();
