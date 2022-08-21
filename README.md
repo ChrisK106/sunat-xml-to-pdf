@@ -1,4 +1,4 @@
-[![pages-build-deployment](https://github.com/ChrisK106/sunat-xml-to-pdf/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/ChrisK106/sunat-xml-to-pdf/actions/workflows/pages/pages-build-deployment)
+[![CodeQL](https://github.com/ChrisK106/sunat-xml-to-pdf/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/ChrisK106/sunat-xml-to-pdf/actions/workflows/codeql-analysis.yml) [![pages-build-deployment](https://github.com/ChrisK106/sunat-xml-to-pdf/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/ChrisK106/sunat-xml-to-pdf/actions/workflows/pages/pages-build-deployment)
 
 # SUNAT XML To PDF
 Aplicación de escritorio para generar **PDFs personalizados** de facturación electrónica a partir de la información contenida en un archivo XML emitido por **SUNAT**.
