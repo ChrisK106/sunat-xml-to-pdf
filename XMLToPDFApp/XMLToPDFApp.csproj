@@ -14,14 +14,15 @@
     <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <SignAssembly>True</SignAssembly>
-    <PackageProjectUrl>https://github.com/ChrisK106/SUNAT_XMLToPDF</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/ChrisK106/SUNAT_XMLToPDF</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/ChrisK106/sunat-xml-to-pdf</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/ChrisK106/sunat-xml-to-pdf</RepositoryUrl>
     <EnableNETAnalyzers>False</EnableNETAnalyzers>
     <Version>$(AssemblyVersion)</Version>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <ApplicationIcon>Resources\xml_filetype_icon_128.ico</ApplicationIcon>
-    <AssemblyOriginatorKeyFile>D:\Christian\DEV\SunatXmlToPdf\cmd\sunatXmlToPdfApp.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>Resources\SunatXmlToPdfApp.snk</AssemblyOriginatorKeyFile>
     <PackageIcon>xml_filetype_icon_128.png</PackageIcon>
+    <DelaySign>False</DelaySign>
   </PropertyGroup>
 
   <ItemGroup>
