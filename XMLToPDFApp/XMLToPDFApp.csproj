@@ -34,7 +34,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Clowd.Squirrel" Version="2.9.48" />
+    <PackageReference Include="Clowd.Squirrel" Version="2.11.1" />
     <PackageReference Include="iTextSharp" Version="5.5.13.3" />
     <PackageReference Include="itextsharp.xmlworker" Version="5.5.13.3" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
