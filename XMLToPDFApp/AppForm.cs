@@ -22,7 +22,7 @@ namespace XMLToPDFApp
             InitializeComponent();
             CenterToScreen();
 
-            Text = "SUNAT XML a PDF v." + Application.ProductVersion;
+            Text = $"SUNAT XML a PDF v.{Application.ProductVersion}";
             lblStatus.Text = "Listo";
 
             LoadBusinessList();
@@ -364,8 +364,8 @@ namespace XMLToPDFApp
                         pdfDoc.Add(headerImage);
                     }
 
-                    string documentIdSeries = documentId.Substring(0, documentId.Length - documentId.IndexOf("-") + 1);
-                    string documentIdNumber = documentId.Substring(documentId.IndexOf("-") + 1);
+                    string documentIdSeries = documentId.Substring(0, documentId.Length - documentId.IndexOf('-') + 1);
+                    string documentIdNumber = documentId.Substring(documentId.IndexOf('-') + 1);
 
                     string qrCodeString = headerBusinessID + "|" + invoiceTypeCode + "|" + documentIdSeries + "|" + documentIdNumber + "|" +
                         taxAmount + "|" + payableAmount + "|" + issueDate + "|" + customerTypeCode + "|" + customerId + "|";

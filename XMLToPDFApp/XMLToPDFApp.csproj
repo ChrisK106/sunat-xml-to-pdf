@@ -1,9 +1,9 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net6.0-windows</TargetFramework>
-    <UseWindowsForms>true</UseWindowsForms>
+    <TargetFramework>net8.0-windows10.0.19041.0</TargetFramework>
+    <UseWindowsForms>True</UseWindowsForms>
     <StartupObject>XMLToPDFApp.Program</StartupObject>
     <Authors>Christian Cano</Authors>
     <Company></Company>
@@ -16,13 +16,35 @@
     <SignAssembly>True</SignAssembly>
     <PackageProjectUrl>https://github.com/ChrisK106/sunat-xml-to-pdf</PackageProjectUrl>
     <RepositoryUrl>https://github.com/ChrisK106/sunat-xml-to-pdf</RepositoryUrl>
-    <EnableNETAnalyzers>False</EnableNETAnalyzers>
+    <EnableNETAnalyzers>True</EnableNETAnalyzers>
     <Version>$(AssemblyVersion)</Version>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <ApplicationIcon>Resources\xml_filetype_icon_128.ico</ApplicationIcon>
     <AssemblyOriginatorKeyFile>Resources\SunatXmlToPdfApp.snk</AssemblyOriginatorKeyFile>
     <PackageIcon>xml_filetype_icon_128.png</PackageIcon>
     <DelaySign>False</DelaySign>
+    <SupportedOSPlatformVersion>10.0.19041.0</SupportedOSPlatformVersion>
+    <UseWPF>False</UseWPF>
+    <Nullable>warnings</Nullable>
+    <RepositoryType>git</RepositoryType>
+    <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <WarningLevel>1</WarningLevel>
+    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
+    <DebugType>full</DebugType>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <WarningLevel>1</WarningLevel>
+    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
+    <DebugType>full</DebugType>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
+    <RunAnalyzersDuringLiveAnalysis>False</RunAnalyzersDuringLiveAnalysis>
   </PropertyGroup>
 
   <ItemGroup>
@@ -34,7 +56,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Clowd.Squirrel" Version="2.9.48" />
+    <PackageReference Include="Clowd.Squirrel" Version="2.11.1" />
     <PackageReference Include="iTextSharp" Version="5.5.13.3" />
     <PackageReference Include="itextsharp.xmlworker" Version="5.5.13.3" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />

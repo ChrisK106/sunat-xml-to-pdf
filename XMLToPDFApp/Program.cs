@@ -1,5 +1,6 @@
 using Squirrel;
 using System;
+using System.Runtime.Versioning;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -12,6 +13,7 @@ namespace XMLToPDFApp
         ///  The main entry point for the application.
         /// </summary>
         [STAThread]
+        [SupportedOSPlatform("windows")]
 
         static void Main()
         {
