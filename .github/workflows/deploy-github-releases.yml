@@ -1,0 +1,34 @@
+name: Deploy to GitHub Releases
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy-to-github-releases:
+    runs-on: windows-latest
+    steps:
+    
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+      
+    - name: Get Version from Project File
+      id: get-version
+      shell: bash
+      run: echo "version=$(grep -oE '<AssemblyVersion>[^<]+' XMLToPDFApp/XMLToPDFApp.csproj | sed 's/<AssemblyVersion>//')" >> $GITHUB_OUTPUT
+
+    - name: Install .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.0.x
+        
+    - name: Publish Application
+      run: dotnet publish XMLToPDFApp/XMLToPDFApp.csproj -c Release -o publish -r win-x64 --self-contained true
+
+    - name: Create Velopack Release
+      run: |
+        dotnet tool install -g vpk
+        vpk download github --repoUrl https://github.com/ChrisK106/sunat-xml-to-pdf
+        vpk pack -u SunatXmlToPdfApp -v ${{ steps.get-version.outputs.version }} -p publish -f 'net8-x64-desktop' -s 'XMLToPDFApp\Resources\xml_filetype_icon_128.png' -i 'XMLToPDFApp\Resources\xml_filetype_icon_128.ico' --packTitle 'SUNAT XML a PDF' --packAuthors 'Christian Cano'
+        vpk upload github --repoUrl https://github.com/ChrisK106/sunat-xml-to-pdf --publish --releaseName ${{ steps.get-version.outputs.version }} --tag ${{ steps.get-version.outputs.version }}
