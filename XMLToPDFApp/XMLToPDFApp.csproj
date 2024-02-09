@@ -3,6 +3,7 @@
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net8.0-windows10.0.19041.0</TargetFramework>
+    <RuntimeIdentifiers>win-x86;win-x64</RuntimeIdentifiers>
     <UseWindowsForms>True</UseWindowsForms>
     <StartupObject>XMLToPDFApp.Program</StartupObject>
     <Authors>Christian Cano</Authors>
