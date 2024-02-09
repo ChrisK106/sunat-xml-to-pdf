@@ -29,4 +29,4 @@ jobs:
         dotnet tool install -g vpk
         vpk download github --repoUrl https://github.com/ChrisK106/sunat-xml-to-pdf
         vpk pack -u SunatXmlToPdfApp -v ${{ steps.get-version.outputs.version }} -p publish -e 'XMLToPDFApp.exe' -f 'net8-x64-desktop' -s 'XMLToPDFApp\Resources\xml_filetype_icon_128.png' -i 'XMLToPDFApp\Resources\xml_filetype_icon_128.ico' --packTitle 'SUNAT XML a PDF' --packAuthors 'Christian Cano'
-        vpk upload github --repoUrl https://github.com/ChrisK106/sunat-xml-to-pdf --publish --releaseName ${{ steps.get-version.outputs.version }} --tag ${{ steps.get-version.outputs.version }}
+        vpk upload github --repoUrl https://github.com/ChrisK106/sunat-xml-to-pdf --publish --releaseName ${{ steps.get-version.outputs.version }} --tag ${{ steps.get-version.outputs.version }} --token ${{ secrets.GH_TOKEN }}
