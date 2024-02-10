@@ -1,4 +1,4 @@
-name: Deploy to GitHub Releases
+name: GitHub Releases
 
 on:
   workflow_dispatch:
@@ -22,11 +22,11 @@ jobs:
         dotnet-version: 8.0.x
         
     - name: Publish Application
-      run: dotnet publish XMLToPDFApp/XMLToPDFApp.csproj -c Release -o publish -r win-x64 --self-contained true
+      run: dotnet publish 'XMLToPDFApp/XMLToPDFApp.csproj' -c Release -o publish -r win-x64 --self-contained true
 
     - name: Create Velopack Release
       run: |
         dotnet tool install -g vpk
-        vpk download github --repoUrl https://github.com/ChrisK106/sunat-xml-to-pdf
+        vpk download github --repoUrl 'https://github.com/ChrisK106/sunat-xml-to-pdf'
         vpk pack -u SunatXmlToPdfApp -v ${{ steps.get-version.outputs.version }} -p publish -e 'XMLToPDFApp.exe' -f 'net8-x64-desktop' -s 'XMLToPDFApp\Resources\xml_filetype_icon_128.png' -i 'XMLToPDFApp\Resources\xml_filetype_icon_128.ico' --packTitle 'SUNAT XML a PDF' --packAuthors 'Christian Cano'
-        vpk upload github --repoUrl https://github.com/ChrisK106/sunat-xml-to-pdf --publish --releaseName ${{ steps.get-version.outputs.version }} --tag ${{ steps.get-version.outputs.version }} --token ${{ secrets.GH_TOKEN }}
+        vpk upload github --repoUrl 'https://github.com/ChrisK106/sunat-xml-to-pdf' --publish --releaseName ${{ steps.get-version.outputs.version }} --tag ${{ steps.get-version.outputs.version }} --token ${{ secrets.GH_TOKEN }}
