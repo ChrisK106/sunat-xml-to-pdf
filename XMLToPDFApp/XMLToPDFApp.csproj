@@ -2,29 +2,25 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net8.0-windows10.0.19041.0</TargetFramework>
-    <RuntimeIdentifiers>win-x86;win-x64</RuntimeIdentifiers>
+    <TargetFramework>net8.0-windows7.0</TargetFramework>
     <UseWindowsForms>True</UseWindowsForms>
     <StartupObject>XMLToPDFApp.Program</StartupObject>
     <Authors>Christian Cano</Authors>
-    <Company></Company>
-    <Description>SUNAT XML To PDF - Desktop Application</Description>
-    <Copyright>Christian Cano</Copyright>
+    <Description>SUNAT XML a PDF</Description>
+    <Copyright>© Christian Cano</Copyright>
     <AssemblyVersion>1.0.4</AssemblyVersion>
     <FileVersion>$(AssemblyVersion)</FileVersion>
     <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x64</PlatformTarget>
     <SignAssembly>True</SignAssembly>
     <PackageProjectUrl>https://github.com/ChrisK106/sunat-xml-to-pdf</PackageProjectUrl>
     <RepositoryUrl>https://github.com/ChrisK106/sunat-xml-to-pdf</RepositoryUrl>
     <EnableNETAnalyzers>True</EnableNETAnalyzers>
     <Version>$(AssemblyVersion)</Version>
-    <ApplicationManifest>app.manifest</ApplicationManifest>
-    <ApplicationIcon>Resources\xml_filetype_icon_128.ico</ApplicationIcon>
     <AssemblyOriginatorKeyFile>Resources\SunatXmlToPdfApp.snk</AssemblyOriginatorKeyFile>
     <PackageIcon>xml_filetype_icon_128.png</PackageIcon>
     <DelaySign>False</DelaySign>
-    <SupportedOSPlatformVersion>10.0.19041.0</SupportedOSPlatformVersion>
+    <SupportedOSPlatformVersion>7.0</SupportedOSPlatformVersion>
     <UseWPF>False</UseWPF>
     <Nullable>warnings</Nullable>
     <RepositoryType>git</RepositoryType>
@@ -34,18 +30,24 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <WarningLevel>1</WarningLevel>
     <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
-    <DebugType>full</DebugType>
+    <DebugType>none</DebugType>
+    <Optimize>True</Optimize>
+    <Deterministic>False</Deterministic>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <WarningLevel>1</WarningLevel>
     <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
-    <DebugType>full</DebugType>
+    <DebugType>none</DebugType>
+    <Deterministic>False</Deterministic>
   </PropertyGroup>
 
   <PropertyGroup>
     <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
     <RunAnalyzersDuringLiveAnalysis>False</RunAnalyzersDuringLiveAnalysis>
+    <ApplicationIcon>Resources\xml_filetype_icon_128.ico</ApplicationIcon>
+    <NoWin32Manifest>true</NoWin32Manifest>
+    <Title>$(AssemblyName)</Title>
   </PropertyGroup>
 
   <ItemGroup>
