@@ -8,9 +8,9 @@ Aplicación de escritorio para generar **PDFs personalizados** de facturación e
 ## Instalación
 1. Descargue el **instalador** de la última versión de la aplicación desde el siguiente enlace:
 
-[![Descargar instalador](https://user-images.githubusercontent.com/46413807/158051337-55996060-f386-496f-97d2-85ac188ff6f7.png)](https://github.com/ChrisK106/sunat-xml-to-pdf/releases/latest/download/SunatXmlToPdfAppSetup.exe)
+[![Descargar instalador](https://user-images.githubusercontent.com/46413807/158051337-55996060-f386-496f-97d2-85ac188ff6f7.png)](https://github.com/ChrisK106/sunat-xml-to-pdf/releases/latest/download/SunatXmlToPdfApp-win-Setup.exe)
 
-2. Ejecute el instalador ***(SunatXmlToPdfAppSetup.exe)*** y la aplicación será instalada inmediatamente, así como ***.NET Desktop Runtime 6.0*** de ser necesario.
+2. Ejecute el instalador ***(SunatXmlToPdfApp-win-Setup.exe)*** y la aplicación será instalada inmediatamente, así como ***.NET 8.0 Desktop Runtime*** de ser necesario.
 3. Finalizada la instalación, la aplicación será ejecutada de inmediato y puede empezar a utilizarla.
 
 ***Opcional:*** Descargue ***data de ejemplo*** (perfiles de empresa) haciendo clic [aquí](https://github.com/ChrisK106/sunat-xml-to-pdf/releases/latest/download/SunatXmlToPdfApp-SampleData.exe).
@@ -18,13 +18,23 @@ Aplicación de escritorio para generar **PDFs personalizados** de facturación e
 ***Nota:*** La aplicación cuenta con actualizaciones automáticas, solo bastará con que ejecute la aplicación y de detectarse una nueva versión disponible, podrá optar por actualizar de inmediato.
 
 ## Requisitos
-- Windows 7 o posterior
-- [.NET Desktop Runtime 6.0](https://dotnet.microsoft.com/en-us/download/dotnet/6.0/runtime) (será instalado de no contar con la versión de .NET requerida)
+- Windows 10 versión 2004 (build 19041) o posteriores
+- [.NET 8.0 Desktop Runtime x64](https://dotnet.microsoft.com/en-us/download/dotnet/8.0/runtime) (será instalado de no contar con la versión de .NET requerida)
 
 ## Capturas de la aplicación
 ![XML-PDF_1 0 1](https://user-images.githubusercontent.com/46413807/158053000-a8ff0258-9263-446c-99f0-1316f8e39478.png)
 ![Empresas_1 0 1](https://user-images.githubusercontent.com/46413807/158053003-29950a2a-8e4b-44b5-bf4a-e5bd9deec345.png)
 
 ## Dependencias
-- [Clowd.Squirrel](https://github.com/clowd/Clowd.Squirrel)
+
 - [iTextSharp](https://github.com/itext/itextsharp)
+
+[![iTextSharp](https://github.com/ChrisK106/sunat-xml-to-pdf/assets/46413807/7e75559a-31d3-40bc-b297-23b084f57893)](https://github.com/itext/itextsharp)
+
+- [Newtonsoft.Json](https://github.com/JamesNK/Newtonsoft.Json)
+
+[![Newtonsoft.Json](https://github.com/ChrisK106/sunat-xml-to-pdf/assets/46413807/cc1c6ef6-0785-47a2-b839-d3813cb82c27)](https://github.com/JamesNK/Newtonsoft.Json)
+
+- [Velopack](https://github.com/velopack/velopack)
+
+[![Velopack](https://github.com/ChrisK106/sunat-xml-to-pdf/assets/46413807/341ccbb2-e720-4dff-a9b4-8a2f18066571)](https://github.com/velopack/velopack)
