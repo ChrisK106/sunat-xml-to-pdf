@@ -29,7 +29,7 @@ Aplicación de escritorio para generar **PDFs personalizados** de facturación e
 
 - [iTextSharp](https://github.com/itext/itextsharp)
 
-[![iTextSharp](https://github.com/itext/itext7-dotnet/blob/develop/assets/iText_Logo_Small.png)](https://github.com/itext/itextsharp)
+[![iTextSharp](https://github.com/ChrisK106/sunat-xml-to-pdf/assets/46413807/8eade4a4-4c92-426c-b9c2-14d7f0629e91)](https://github.com/itext/itextsharp)
 
 - [Newtonsoft.Json](https://github.com/JamesNK/Newtonsoft.Json)
 
