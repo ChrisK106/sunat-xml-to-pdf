@@ -11,7 +11,6 @@ jobs:
     env:
       Project_File_Path: XMLToPDFApp/XMLToPDFApp.csproj
       Project_File_Tag: AssemblyVersion
-      Dotnet_Install_Version: 8.0.x
       Repository_Url: https://github.com/ChrisK106/sunat-xml-to-pdf
       App_Id: SunatXmlToPdfApp
       Main_Executable: XMLToPDFApp.exe
@@ -30,12 +29,12 @@ jobs:
     - name: Get Version from Project File
       id: get-version
       shell: bash
-      run: echo "version=$(grep -oE '< $env:Project_File_Tag >[^<]+' $env:Project_File_Path | sed 's/< $env:Project_File_Tag >//')" >> $GITHUB_OUTPUT
+      run: echo "version=$(grep -oE '< $env:Project_File_Tag >[^<]+'" $env:Project_File_Path "| sed 's/< $env:Project_File_Tag >//')" >> $GITHUB_OUTPUT
 
     - name: Install .NET
       uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: $env:Dotnet_Install_Version
+        dotnet-version: 8.0.x
         
     - name: Publish Application
       run: dotnet publish $env:Project_File_Path -c Release -o publish -r win-x64 --self-contained false
