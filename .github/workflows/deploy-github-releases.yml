@@ -54,4 +54,4 @@ jobs:
         vpk upload github --repoUrl $env:Repository_Url --publish --releaseName ${{ steps.get-version.outputs.version }} --tag ${{ steps.get-version.outputs.version }} --token ${{ secrets.GH_TOKEN }}
         
     - name: Remove the pfx
-      run: Remove-Item -path $env:Project_File_Path\GitHubActionsWorkflow.pfx
+      run: Remove-Item -path $env:Project_File_Directory\GitHubActionsWorkflow.pfx
