@@ -11,7 +11,7 @@ jobs:
     env:
       Project_File_Path: XMLToPDFApp\XMLToPDFApp.csproj
       Project_File_Tag: AssemblyVersion
-      Dotnet_Install_Version: 8.0.x
+      Dotnet_Install_Version: "8.0.x"
       Repository_Url: https://github.com/ChrisK106/sunat-xml-to-pdf
       App_Id: SunatXmlToPdfApp
       Main_Executable: XMLToPDFApp.exe
