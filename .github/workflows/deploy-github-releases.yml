@@ -11,6 +11,7 @@ jobs:
     env:
       Project_File_Path: XMLToPDFApp/XMLToPDFApp.csproj
       Project_File_Tag: AssemblyVersion
+      Project_File_Directory: XMLToPDFApp
       Repository_Url: https://github.com/ChrisK106/sunat-xml-to-pdf
       App_Id: SunatXmlToPdfApp
       Main_Executable: XMLToPDFApp.exe
@@ -43,7 +44,7 @@ jobs:
     - name: Decode the pfx
       run: |
         $pfx_cert_byte = [System.Convert]::FromBase64String("${{ secrets.Base64_Encoded_Pfx }}")
-        $certificatePath = GitHubActionsWorkflow.pfx
+        $certificatePath = Join-Path -Path $env:Project_File_Directory -ChildPath GitHubActionsWorkflow.pfx
         [IO.File]::WriteAllBytes("$certificatePath", $pfx_cert_byte)
 
     - name: Create Velopack Release and upload to Github Releases
