@@ -50,8 +50,8 @@ jobs:
       run: |
         dotnet tool install -g vpk
         vpk download github --repoUrl $env:Repository_Url
-        vpk pack -u $env:App_Id -v ${{ steps.get-version.outputs.version }} -p publish -e $env:Main_Executable -f $env:Required_Dependencies -s $env:Splash_Image_Path -i $env:Icon_Path --packTitle $env:Pack_Title --packAuthors $env:Pack_Authors --signParams $env:Sign_Params
+        vpk pack -u $env:App_Id -v ${{ steps.get-version.outputs.version }} -p publish -e $env:Main_Executable -f $env:Required_Dependencies -s $env:Splash_Image_Path -i $env:Icon_Path --packTitle $env:Pack_Title --packAuthors $env:Pack_Authors -n $env:Sign_Params --verbose
         vpk upload github --repoUrl $env:Repository_Url --publish --releaseName ${{ steps.get-version.outputs.version }} --tag ${{ steps.get-version.outputs.version }} --token ${{ secrets.GH_TOKEN }}
         
     - name: Remove the pfx
-      run: Remove-Item -path XMLToPDFApp\GitHubActionsWorkflow.pfx
+      run: Remove-Item -path $certificatePath
