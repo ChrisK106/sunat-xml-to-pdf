@@ -13,12 +13,12 @@ Aplicación de escritorio para generar **PDFs personalizados** de facturación e
 2. Ejecute el instalador ***(SunatXmlToPdfApp-win-Setup.exe)*** y la aplicación será instalada inmediatamente, así como ***.NET 8.0 Desktop Runtime*** de ser necesario.
 3. Finalizada la instalación, la aplicación será ejecutada de inmediato y puede empezar a utilizarla.
 
-***Opcional:*** Descargue ***data de ejemplo*** (perfiles de empresa) haciendo clic [aquí](https://github.com/ChrisK106/sunat-xml-to-pdf/releases/latest/download/SunatXmlToPdfApp-SampleData.exe).
+***Opcional:*** Descargue ***data de ejemplo*** (perfiles de empresa) haciendo clic [aquí](https://github.com/ChrisK106/sunat-xml-to-pdf/releases/download/1.0.0/SunatXmlToPdfApp-SampleData.exe).
 
 ***Nota:*** La aplicación cuenta con actualizaciones automáticas, solo bastará con que ejecute la aplicación y de detectarse una nueva versión disponible, podrá optar por actualizar de inmediato.
 
 ## Requisitos
-- Windows 10 versión 2004 (build 19041) o posteriores
+- Windows 7 de 64bits o posterior
 - [.NET 8.0 Desktop Runtime x64](https://dotnet.microsoft.com/en-us/download/dotnet/8.0/runtime) (será instalado de no contar con la versión de .NET requerida)
 
 ## Capturas de la aplicación
