@@ -30,7 +30,7 @@ jobs:
     - name: Get Version from Project File
       id: get-version
       shell: bash
-      run: echo "version=$(grep -oE '<AssemblyVersion>[^<]+' " $env:Project_File_Path " | sed 's/<AssemblyVersion>//')" >> $GITHUB_OUTPUT
+      run: echo "version=$(grep -oE '<AssemblyVersion>[^<]+' $env:Project_File_Path | sed 's/<AssemblyVersion>//')" >> $GITHUB_OUTPUT
 
     - name: Install .NET
       uses: actions/setup-dotnet@v4
