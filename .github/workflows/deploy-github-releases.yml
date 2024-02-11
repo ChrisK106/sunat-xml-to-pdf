@@ -19,7 +19,7 @@ jobs:
       Icon_Path: XMLToPDFApp\Resources\xml_filetype_icon_128.ico
       Pack_Title: SUNAT XML a PDF
       Pack_Authors: Christian Cano
-      Sign_Params: "/td sha256 /fd sha256 /f $certificatePath /tr http://timestamp.sectigo.com /p ${{ secrets.Pfx_Key }}"
+      Sign_Params: "/td sha256 /fd sha256 /f $env:Project_File_Path/GitHubActionsWorkflow.pfx /tr http://timestamp.sectigo.com /p ${{ secrets.Pfx_Key }}"
       
     steps:
     
@@ -54,4 +54,4 @@ jobs:
         vpk upload github --repoUrl $env:Repository_Url --publish --releaseName ${{ steps.get-version.outputs.version }} --tag ${{ steps.get-version.outputs.version }} --token ${{ secrets.GH_TOKEN }}
         
     - name: Remove the pfx
-      run: Remove-Item -path $certificatePath
+      run: Remove-Item -path $env:Project_File_Path\GitHubActionsWorkflow.pfx
