@@ -7,7 +7,7 @@ jobs:
   deploy-to-github-releases:
     
     runs-on: windows-latest
-
+    
     env:
       Project_File_Path: XMLToPDFApp\XMLToPDFApp.csproj
       Project_File_Directory: XMLToPDFApp
@@ -19,7 +19,7 @@ jobs:
       Icon_Path: XMLToPDFApp\Resources\xml_filetype_icon_128.ico
       Pack_Title: SUNAT XML a PDF
       Pack_Authors: Christian Cano
-      Sign_Params: "/td sha256 /fd sha256 /f ../XMLToPDFApp/GitHubActionsWorkflow.pfx /tr http://timestamp.sectigo.com /p ${{ secrets.Pfx_Key }}"
+      Sign_Params: "/td sha256 /fd sha256 /f ..\\XMLToPDFApp\\GitHubActionsWorkflow.pfx /tr http://timestamp.sectigo.com /p ${{ secrets.Pfx_Key }}"
       
     steps:
     
