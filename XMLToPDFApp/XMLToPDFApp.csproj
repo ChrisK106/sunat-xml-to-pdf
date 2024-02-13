@@ -30,8 +30,8 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <WarningLevel>1</WarningLevel>
     <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
-    <DebugType>none</DebugType>
-    <Optimize>True</Optimize>
+    <DebugType>full</DebugType>
+    <Optimize>False</Optimize>
     <Deterministic>False</Deterministic>
   </PropertyGroup>
 
@@ -39,6 +39,7 @@
     <WarningLevel>1</WarningLevel>
     <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
     <DebugType>none</DebugType>
+    <Optimize>True</Optimize>
     <Deterministic>False</Deterministic>
   </PropertyGroup>
 
