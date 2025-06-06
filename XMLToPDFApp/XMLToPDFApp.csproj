@@ -63,7 +63,7 @@
     <PackageReference Include="iTextSharp" Version="5.5.13.4" />
     <PackageReference Include="itextsharp.xmlworker" Version="5.5.13.4" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-    <PackageReference Include="Velopack" Version="0.0.1251" />
+    <PackageReference Include="Velopack" Version="0.0.1297" />
   </ItemGroup>
 
   <ItemGroup>
