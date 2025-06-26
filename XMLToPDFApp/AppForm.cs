@@ -1,6 +1,16 @@
-﻿using iTextSharp.text;
-using iTextSharp.text.pdf;
-using iTextSharp.tool.xml;
+﻿using iText.Barcodes;
+using iText.Commons.Utils;
+using iText.Html2pdf;
+using iText.IO.Font.Constants;
+using iText.IO.Image;
+using iText.Kernel.Colors;
+using iText.Kernel.Font;
+using iText.Kernel.Pdf;
+using iText.Kernel.Pdf.Canvas;
+using iText.Kernel.Pdf.Xobject;
+using iText.Layout;
+using iText.Layout.Element;
+using iText.Layout.Properties;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -15,7 +25,7 @@ namespace XMLToPDFApp
     {
         // Initialize the database object by setting its filename
         readonly Database<Business> dbBusiness = new("BusinessDB.json");
-        private readonly XmlDocument xmlDocument = new();
+        readonly XmlDocument xmlDocument = new();
 
         public AppForm()
         {
@@ -70,20 +80,20 @@ namespace XMLToPDFApp
 
                 xmlDocument.Load(txtXMLFilePath.Text);
 
-                string ublVersion = GetFirstValueFromXmlRootElement("cbc:UBLVersionID");
-                string customizationId = GetFirstValueFromXmlRootElement("cbc:CustomizationID");
+                string ublVersion = GetFirstValueFromRootXmlElement("cbc:UBLVersionID");
+                string customizationId = GetFirstValueFromRootXmlElement("cbc:CustomizationID");
 
-                string digestValue = GetFirstValueFromXmlRootElement("ds:DigestValue");
-                string documentId = GetFirstValueFromXmlRootElement("cbc:ID");
-                string issueDate = GetFirstValueFromXmlRootElement("cbc:IssueDate");
-                string dueDate = GetFirstValueFromXmlRootElement("cbc:DueDate");
+                string digestValue = GetFirstValueFromRootXmlElement("ds:DigestValue");
+                string documentId = GetFirstValueFromRootXmlElement("cbc:ID");
+                string issueDate = GetFirstValueFromRootXmlElement("cbc:IssueDate");
+                string dueDate = GetFirstValueFromRootXmlElement("cbc:DueDate");
 
                 string paymentTermsTotalAmount = string.Empty;
                 List<PaymentTerm> documentCreditInfo = new();
 
                 if (dueDate.Equals(string.Empty))
                 {
-                    dueDate = GetFirstValueFromXmlRootElement("cbc:PaymentDueDate");
+                    dueDate = GetFirstValueFromRootXmlElement("cbc:PaymentDueDate");
 
                     if (!dueDate.Equals(string.Empty))
                     {
@@ -113,36 +123,41 @@ namespace XMLToPDFApp
                 string htmlSource = string.Empty;
                 string documentTitle = string.Empty;
                 string customerTypeCode = string.Empty;
+                string customerIdLabel = string.Empty;
+                string customerNameLabel = string.Empty;
                 string footerText = string.Empty;
 
-                string invoiceTypeCode = GetFirstValueFromXmlRootElement("cbc:InvoiceTypeCode");
+                string invoiceTypeCode = GetFirstValueFromRootXmlElement("cbc:InvoiceTypeCode");
 
                 // FACTURA
                 if (invoiceTypeCode == "01")
                 {
-                    if (paymentTermsTotalAmount.Equals(string.Empty))
-                    {
-                        htmlSource = Properties.Resources.invoice_template.ToString();
-                    }
-                    else
-                    {
-                        htmlSource = Properties.Resources.invoice_template_with_credit_info.ToString();
-                    }
-
                     documentTitle = "FACTURA ELECTRÓNICA";
                     customerTypeCode = "06";
+                    customerIdLabel = "RUC";
+                    customerNameLabel = "Razón Social";
                     footerText = "Representación impresa de la Factura Electrónica. " +
-                    "Consulte o descargue su comprobante electrónico en sunat.gob.pe";
+                        "Consulte o descargue su comprobante electrónico en sunat.gob.pe";
                 }
                 // BOLETA
                 else if (invoiceTypeCode == "03")
                 {
-                    htmlSource = Properties.Resources.receipt_template.ToString();
                     documentTitle = "BOLETA DE VENTA ELECTRÓNICA";
                     customerTypeCode = "01";
+                    customerIdLabel = "Nro. Doc. Identidad";
+                    customerNameLabel = "Señor(es)";
                     footerText = "Representación impresa de la Boleta de Venta Electrónica. " +
-                    "Consulte o descargue su comprobante electrónico en sunat.gob.pe";
+                        "Consulte o descargue su comprobante electrónico en sunat.gob.pe";
                 }
+                else
+                {
+                    MessageBox.Show(this, "Tipo de documento no soportado actualmente por la aplicación.",
+                        "Documento no soportado", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    lblStatus.Text = "Listo";
+                    return;
+                }
+
+                htmlSource = Properties.Resources.invoice_template.ToString();
 
                 XmlNodeList documentNotes = xmlDocument.DocumentElement.GetElementsByTagName("cbc:Note");
 
@@ -154,7 +169,7 @@ namespace XMLToPDFApp
                     documentObservations = documentNotes[1].InnerText;
                 }
 
-                string documentCurrencyCode = GetFirstValueFromXmlRootElement("cbc:DocumentCurrencyCode");
+                string documentCurrencyCode = GetFirstValueFromRootXmlElement("cbc:DocumentCurrencyCode");
 
                 //string documentReference = doc.DocumentElement.GetElementsByTagName("cac:AdditionalDocumentReference")[0].InnerText;
 
@@ -168,19 +183,19 @@ namespace XMLToPDFApp
                 string supplierLine = GetFirstValueFromGivenXmlElement("cac:AccountingSupplierParty", "cbc:Line");
 
                 string customerId = GetFirstValueFromGivenXmlElement("cac:AccountingCustomerParty", "cbc:ID");
-                string customerRegistrationName = GetFirstValueFromGivenXmlElement("cac:AccountingCustomerParty", "cbc:RegistrationName");
+                string customerName = GetFirstValueFromGivenXmlElement("cac:AccountingCustomerParty", "cbc:RegistrationName");
                 string customerCityName = GetFirstValueFromGivenXmlElement("cac:AccountingCustomerParty", "cbc:CityName");
                 string customerCountrySubentity = GetFirstValueFromGivenXmlElement("cac:AccountingCustomerParty", "cbc:CountrySubentity");
                 string customerDistrict = GetFirstValueFromGivenXmlElement("cac:AccountingCustomerParty", "cbc:District");
                 string customerLine = GetFirstValueFromGivenXmlElement("cac:AccountingCustomerParty", "cbc:Line");
 
-                string taxAmount = GetFirstValueFromXmlRootElement("cbc:TaxAmount");
-                string taxableAmount = GetFirstValueFromXmlRootElement("cbc:TaxableAmount");
-                string lineExtensionAmount = GetFirstValueFromXmlRootElement("cbc:LineExtensionAmount");
-                string allowanceTotalAmount = GetFirstValueFromXmlRootElement("cbc:AllowanceTotalAmount");
-                string chargeTotalAmount = GetFirstValueFromXmlRootElement("cbc:ChargeTotalAmount");
-                string prepaidAmount = GetFirstValueFromXmlRootElement("cbc:PrepaidAmount");
-                string payableAmount = GetFirstValueFromXmlRootElement("cbc:PayableAmount");
+                string taxAmount = GetFirstValueFromRootXmlElement("cbc:TaxAmount");
+                string taxableAmount = GetFirstValueFromRootXmlElement("cbc:TaxableAmount");
+                string lineExtensionAmount = GetFirstValueFromRootXmlElement("cbc:LineExtensionAmount");
+                string allowanceTotalAmount = GetFirstValueFromRootXmlElement("cbc:AllowanceTotalAmount");
+                string chargeTotalAmount = GetFirstValueFromRootXmlElement("cbc:ChargeTotalAmount");
+                string prepaidAmount = GetFirstValueFromRootXmlElement("cbc:PrepaidAmount");
+                string payableAmount = GetFirstValueFromRootXmlElement("cbc:PayableAmount");
 
                 List<InvoiceLine> documentDetail = new();
 
@@ -203,11 +218,11 @@ namespace XMLToPDFApp
                 string headerAddressLine2 = selectedBusiness.addressLine2;
                 string headerAddressLine3 = selectedBusiness.addressLine3;
 
-                // Parsing collected XML data to document
+                // Parsing collected XML data to HTML template
                 lblStatus.Text = "Parseando datos XML obtenidos al formato del documento...";
 
-                htmlSource = htmlSource.Replace("@H_BUSSINESS_ID", headerBusinessID);
-                htmlSource = htmlSource.Replace("@H_BUSSINESS_NAME", headerBusinessName);
+                htmlSource = htmlSource.Replace("@H_BUSINESS_ID", headerBusinessID);
+                htmlSource = htmlSource.Replace("@H_BUSINESS_NAME", headerBusinessName);
                 htmlSource = htmlSource.Replace("@H_ADDRESS_1", headerAddressLine1);
                 htmlSource = htmlSource.Replace("@H_ADDRESS_2", headerAddressLine2);
                 htmlSource = htmlSource.Replace("@H_ADDRESS_3", headerAddressLine3);
@@ -216,8 +231,10 @@ namespace XMLToPDFApp
 
                 htmlSource = htmlSource.Replace("@DOCUMENT_ID", documentId);
 
+                htmlSource = htmlSource.Replace("@CUSTOMER_ID_LABEL", customerIdLabel);
                 htmlSource = htmlSource.Replace("@CUSTOMER_ID", customerId);
-                htmlSource = htmlSource.Replace("@CUSTOMER_NAME", customerRegistrationName);
+                htmlSource = htmlSource.Replace("@CUSTOMER_NAME_LABEL", customerNameLabel);
+                htmlSource = htmlSource.Replace("@CUSTOMER_NAME", customerName);
                 htmlSource = htmlSource.Replace("@CUSTOMER_ADDRESS_LINE", customerLine);
 
                 htmlSource = htmlSource.Replace("@ISSUE_DATE", DateTime.Parse(issueDate).ToString("dd/MM/yyyy"));
@@ -272,13 +289,13 @@ namespace XMLToPDFApp
 
                 htmlSource = htmlSource.Replace("@DOCUMENT_DETAIL", strDocumentDetail);
 
-                //TOTAL A PAGAR (TEXTO)
+                // Total a Pagar (Texto)
                 htmlSource = htmlSource.Replace("@TEXT_PAYABLE_AMOUNT", payableAmountText);
 
-                //Observaciones
+                // Observaciones
                 if (!documentObservations.Equals(string.Empty))
                 {
-                    htmlSource = htmlSource.Replace("@DOCUMENT_OBSERVATIONS", "OBSERVACIONES: <br></br>" + documentObservations);
+                    htmlSource = htmlSource.Replace("@DOCUMENT_OBSERVATIONS", "OBSERVACIONES: <br>" + documentObservations);
                 }
                 else
                 {
@@ -288,34 +305,73 @@ namespace XMLToPDFApp
                 // Código Hash
                 htmlSource = htmlSource.Replace("@DIGEST_VALUE", digestValue);
 
-                // Sub Total
+                // DOCUMENT TOTALS
+                string strDocumentCustomTotals = string.Empty;
+
+                // Sub Total Ventas
                 htmlSource = htmlSource.Replace("@DOCUMENT_SUBTOTAL", documentCurrencySymbol + documentSubTotal.ToString("N2"));
 
-                // Anticipos
-                htmlSource = htmlSource.Replace("@DOCUMENT_PREPAID_AMOUNT", documentCurrencySymbol + double.Parse(prepaidAmount).ToString("N2"));
+                // Campos para Factura
+                if (invoiceTypeCode == "01")
+                {
+                    strDocumentCustomTotals += "<tr><td>Anticipos:</td>";
+                    strDocumentCustomTotals += "<td>" + documentCurrencySymbol + double.Parse(prepaidAmount).ToString("N2") + "</td></tr>";
+                    strDocumentCustomTotals += "<tr><td>Descuentos:</td>";
+                    strDocumentCustomTotals += "<td>" + documentCurrencySymbol + "0.00" + "</td></tr>";
+                    strDocumentCustomTotals += "<tr><td>Valor de Venta:</td>";
+                    strDocumentCustomTotals += "<td>" + documentCurrencySymbol + double.Parse(lineExtensionAmount).ToString("N2") + "</td></tr>";
+                }
 
-                // Descuentos
-                htmlSource = htmlSource.Replace("@DOCUMENT_DISCOUNTS", documentCurrencySymbol + "0.00");
+                htmlSource = htmlSource.Replace("@DOCUMENT_CUSTOM_TOTALS", strDocumentCustomTotals);
 
-                // Valor de Venta
-                htmlSource = htmlSource.Replace("@DOCUMENT_LINE_EXTENSION_AMOUNT", documentCurrencySymbol + double.Parse(lineExtensionAmount).ToString("N2"));
+                // ISC
+                htmlSource = htmlSource.Replace("@DOCUMENT_ISC_AMOUNT", documentCurrencySymbol + "0.00");
 
                 // IGV
                 htmlSource = htmlSource.Replace("@DOCUMENT_TAX_AMOUNT", documentCurrencySymbol + double.Parse(taxAmount).ToString("N2"));
 
                 // Otros Cargos
-                htmlSource = htmlSource.Replace("@DOCUMENT_OTHERS_CHARGES", documentCurrencySymbol + "0.00");
+                htmlSource = htmlSource.Replace("@DOCUMENT_OTHER_CHARGES", documentCurrencySymbol + "0.00");
 
-                // Total a Pagar
+                // Otros Tributos
+                htmlSource = htmlSource.Replace("@DOCUMENT_OTHER_TAXES", documentCurrencySymbol + "0.00");
+
+                // Monto de Redondeo
+                htmlSource = htmlSource.Replace("@DOCUMENT_ROUNDING_AMOUNT", documentCurrencySymbol + "0.00");
+
+                // Importe Total
                 htmlSource = htmlSource.Replace("@DOCUMENT_PAYABLE_AMOUNT", documentCurrencySymbol + double.Parse(payableAmount).ToString("N2"));
 
                 // INFORMACIÓN DE CRÉDITO
+                string strDocumentCreditInfo = string.Empty;
+
                 if (!paymentTermsTotalAmount.Equals(string.Empty))
                 {
-                    htmlSource = htmlSource.Replace("@DOCUMENT_CREDIT_TOTAL", documentCurrencySymbol + double.Parse(paymentTermsTotalAmount).ToString("N2"));
-                    htmlSource = htmlSource.Replace("@DOCUMENT_CREDIT_QUOTAS", documentCreditInfo.Count.ToString());
+                    // Document Credit Info Header
+                    strDocumentCreditInfo += "<tr><td>";
+                    strDocumentCreditInfo += "<table class='border' style='font-size: 10px; width: 280px;'>";
+                    strDocumentCreditInfo += "<tr>";
+                    strDocumentCreditInfo += "<td colspan='2' style='font-weight: bold;'>Información del Crédito</td>";
+                    strDocumentCreditInfo += "</tr>";
+                    strDocumentCreditInfo += "<tr>";
+                    strDocumentCreditInfo += "<td>Monto neto pendiente de pago:</td>";
+                    strDocumentCreditInfo += "<td>" + documentCurrencySymbol + double.Parse(paymentTermsTotalAmount).ToString("N2") + "</td>";
+                    strDocumentCreditInfo += "</tr>";
+                    strDocumentCreditInfo += "<tr>";
+                    strDocumentCreditInfo += "<td>Total de Cuotas:</td>";
+                    strDocumentCreditInfo += "<td>" + documentCreditInfo.Count.ToString() + "</td>";
+                    strDocumentCreditInfo += "</tr>";
+                    strDocumentCreditInfo += "</table>";
+                    strDocumentCreditInfo += "</td></tr>";
 
-                    string strDocumentCreditInfo = string.Empty;
+                    // Document Credit Info Detail
+                    strDocumentCreditInfo += "<tr><td>";
+                    strDocumentCreditInfo += "<table class='border' style='font-size: 10px; width: 280px;'>";
+                    strDocumentCreditInfo += "<thead><tr>";
+                    strDocumentCreditInfo += "<th style='width: 33%;'>N° Cuota</th>";
+                    strDocumentCreditInfo += "<th style='width: 33%;'>Fec. Venc.</th>";
+                    strDocumentCreditInfo += "<th style='width: 34%;'>Monto</th>";
+                    strDocumentCreditInfo += "</tr></thead>";
 
                     foreach (PaymentTerm pt in documentCreditInfo)
                     {
@@ -326,66 +382,118 @@ namespace XMLToPDFApp
                         strDocumentCreditInfo += "</tr>";
                     }
 
-                    htmlSource = htmlSource.Replace("@DOCUMENT_CREDIT_INFO", strDocumentCreditInfo);
+                    strDocumentCreditInfo += "</table>";
+                    strDocumentCreditInfo += "</td></tr>";
                 }
 
-                string datetimeFileGeneration = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss");
-                htmlSource = htmlSource.Replace("@DATETIME_GENERATION", datetimeFileGeneration);
+                htmlSource = htmlSource.Replace("@DOCUMENT_CREDIT_INFO", strDocumentCreditInfo);
+
+                // Page margins values in millimeters
+                short pageMarginTop = 10;
+                short pageMarginBottom = 10;
+                short pageMarginLeft = 10;
+                short pageMarginRight = 10;
+
+                // Filling page margins values in HTML template
+                htmlSource = htmlSource.Replace("@PAGE_MARGIN_TOP", pageMarginTop.ToString());
+                htmlSource = htmlSource.Replace("@PAGE_MARGIN_BOTTOM", (pageMarginBottom + 15).ToString()); // +15mm for footer
+                htmlSource = htmlSource.Replace("@PAGE_MARGIN_LEFT", pageMarginLeft.ToString());
+                htmlSource = htmlSource.Replace("@PAGE_MARGIN_RIGHT", pageMarginRight.ToString());;
 
                 // Creating PDF 
                 lblStatus.Text = "Generando PDF...";
 
+                // Creating the PDF file path with the name format "documentId_supplierId_ddMMyy_HHmmss.pdf"
                 string pdfFilePath = Path.Combine(txtPDFPath.Text, documentId + "_" + supplierId + "_" + DateTime.Now.ToString("ddMMyy_HHmmss") + ".pdf");
 
-                using (FileStream stream = new(pdfFilePath, FileMode.Create))
+                ConverterProperties properties = new ConverterProperties();
+                properties.SetImmediateFlush(false);
+                //properties.SetBaseUri("");
+
+                PdfWriter writer = new PdfWriter(pdfFilePath);
+                writer.SetCompressionLevel(CompressionConstants.BEST_COMPRESSION);
+
+                PdfDocument pdfDoc = new PdfDocument(writer);
+                pdfDoc.SetDefaultPageSize(iText.Kernel.Geom.PageSize.A4);
+
+                Document doc = HtmlConverter.ConvertToDocument(htmlSource, pdfDoc, properties);
+
+                // Setting margins for document object
+                doc.SetMargins(ConvertMmToUserUnits(pageMarginTop), ConvertMmToUserUnits(pageMarginRight), ConvertMmToUserUnits(pageMarginBottom), ConvertMmToUserUnits(pageMarginLeft));
+
+                if (!selectedBusiness.logoName.Equals(""))
                 {
-                    Document pdfDoc = new(PageSize.A4, 25, 25, 25, 25);
-
-                    PdfWriter writer = PdfWriter.GetInstance(pdfDoc, stream);
-                    writer.PageEvent = new Footer(footerText);
-
-                    pdfDoc.Open();
-
                     Image headerImage;
+                    string imgPath = Path.Combine(dbBusiness.imgDirectory, selectedBusiness.logoName);
 
-                    if (!selectedBusiness.logoName.Equals(""))
-                    {
-                        string imgPath = Path.Combine(dbBusiness.imgDirectory, selectedBusiness.logoName);
+                    headerImage = new Image(ImageDataFactory.Create(imgPath));
+                    headerImage.ScaleToFit(160f, 95f);
 
-                        headerImage = Image.GetInstance(imgPath);
-                        headerImage.ScalePercent(24f);
-                        headerImage.ScaleToFit(160f, 95f);
+                    float xAxisAdjustment = (160f - headerImage.GetImageScaledWidth()) / 2f;
+                    float yAxisAdjustment = (95f - headerImage.GetImageScaledHeight()) / 2f;
 
-                        float xAxisAdjustment = (160f - headerImage.ScaledWidth) / 2f;
-                        float yAxisAdjustment = (95f - headerImage.ScaledHeight) / 2f;
+                    float finalXvalue = doc.GetLeftMargin() + xAxisAdjustment;
+                    float finalYvalue = doc.GetPdfDocument().GetDefaultPageSize().GetHeight() - doc.GetTopMargin() 
+                        - headerImage.GetImageScaledHeight() - yAxisAdjustment;
 
-                        headerImage.SetAbsolutePosition(pdfDoc.LeftMargin + xAxisAdjustment, pdfDoc.Top - headerImage.ScaledHeight - 2f - yAxisAdjustment);
+                    // Setting the position of the header image in the document
+                    headerImage.SetFixedPosition(1, finalXvalue, finalYvalue);
 
-                        pdfDoc.Add(headerImage);
-                    }
+                    doc.Add(headerImage);
+                }
 
-                    string documentIdSeries = documentId.Substring(0, documentId.Length - documentId.IndexOf('-') + 1);
-                    string documentIdNumber = documentId.Substring(documentId.IndexOf('-') + 1);
+                string documentIdSeries = documentId.Substring(0, documentId.Length - documentId.IndexOf('-') + 1);
+                string documentIdNumber = documentId.Substring(documentId.IndexOf('-') + 1);
 
-                    string qrCodeString = headerBusinessID + "|" + invoiceTypeCode + "|" + documentIdSeries + "|" + documentIdNumber + "|" +
-                        taxAmount + "|" + payableAmount + "|" + issueDate + "|" + customerTypeCode + "|" + customerId + "|";
+                // Creating the QR code string with the required data
+                string qrCodeString = headerBusinessID + "|" + invoiceTypeCode + "|" + documentIdSeries + "|" + documentIdNumber + "|" +
+                    taxAmount + "|" + payableAmount + "|" + issueDate + "|" + customerTypeCode + "|" + customerId + "|";
 
-                    BarcodeQRCode qrCode = new(qrCodeString, 250, 250, null);
-                    Image qrCodeImage = qrCode.GetImage();
-                    qrCodeImage.ScaleAbsolute(120, 120);
-                    //qrCodeImage.Alignment = Image.UNDERLYING;
-                    qrCodeImage.SetAbsolutePosition((pdfDoc.Right + pdfDoc.RightMargin) / 2 - 60, pdfDoc.Bottom + 35);
+                // Creating the QR code from the string
+                BarcodeQRCode qrCode = new BarcodeQRCode(qrCodeString);
+                PdfFormXObject formXObject = qrCode.CreateFormXObject(ColorConstants.BLACK, pdfDoc);
 
-                    pdfDoc.Add(qrCodeImage);
+                // Creating the QR code image and setting its size and position in the document
+                Image qrCodeImage = new Image(formXObject);
 
-                    using (StringReader sr = new(htmlSource))
-                    {
-                        XMLWorkerHelper.GetInstance().ParseXHtml(writer, pdfDoc, sr);
-                    }
+                // Setting the QR code size in millimeters
+                float qrCodeSize = ConvertMmToUserUnits(35f);
 
-                    pdfDoc.Close();
-                    stream.Close();
+                qrCodeImage.ScaleToFit(qrCodeSize, qrCodeSize);
+                qrCodeImage.SetFixedPosition(pdfDoc.GetLastPage().GetPageSize().GetWidth() / 2 - qrCodeSize / 2, doc.GetBottomMargin() + 34f);
+
+                doc.Add(qrCodeImage);
+
+                // FOOTER
+
+                // Define the footer text and its font properties
+                Paragraph footerString = new Paragraph(footerText)
+                    .SetFont(PdfFontFactory.CreateFont(StandardFonts.HELVETICA))
+                    .SetFontSize(7.5f);
+
+                // Create a paragraph for the current page number
+                Paragraph currentPageNumber;
+
+                // Define the current date and time and its font properties
+                Paragraph currentDateTime = new Paragraph(DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss"))
+                    .SetFont(PdfFontFactory.CreateFont(StandardFonts.HELVETICA))
+                    .SetFontSize(7.5f);
+
+                // Insert the footer at the bottom of each page
+                for (int i = 1; i <= pdfDoc.GetNumberOfPages(); i++)
+                {
+                    // Define the current page number and its font properties
+                    currentPageNumber = new Paragraph("Página " + i.ToString() + "/" + pdfDoc.GetNumberOfPages())
+                        .SetFont(PdfFontFactory.CreateFont(StandardFonts.HELVETICA))
+                        .SetFontSize(7.5f);
+
+                    doc.ShowTextAligned(footerString, doc.GetLeftMargin(), doc.GetBottomMargin() + 20, i, TextAlignment.LEFT, VerticalAlignment.BOTTOM, 0);
+                    doc.ShowTextAligned(currentPageNumber, pdfDoc.GetPage(i).GetPageSize().GetWidth() - doc.GetRightMargin(), doc.GetBottomMargin() + 20, i, TextAlignment.RIGHT, VerticalAlignment.BOTTOM, 0);
+                    doc.ShowTextAligned(currentDateTime, pdfDoc.GetPage(i).GetPageSize().GetWidth() / 2, doc.GetBottomMargin(), i, TextAlignment.CENTER, VerticalAlignment.BOTTOM, 0);
                 };
+
+                // Close the document and the writer objects
+                doc.Close();
 
                 lblStatus.Text = "PDF generado en... " + pdfFilePath;
 
@@ -395,10 +503,7 @@ namespace XMLToPDFApp
                     {
                         var p = new Process
                         {
-                            StartInfo = new ProcessStartInfo(pdfFilePath)
-                            {
-                                UseShellExecute = true
-                            }
+                            StartInfo = new ProcessStartInfo(pdfFilePath) { UseShellExecute = true }
                         };
 
                         p.Start();
@@ -670,43 +775,46 @@ namespace XMLToPDFApp
             imageFileStream.Close();
         }
 
-        private string GetFirstValueFromXmlRootElement(string tagName)
+        private string GetFirstValueFromRootXmlElement(string tagName)
         {
+            if (xmlDocument.DocumentElement == null) return string.Empty;
+
             XmlNodeList xmlNodeList = xmlDocument.DocumentElement.GetElementsByTagName(tagName);
 
-            if (xmlNodeList.Count == 0)
-            {
-                return string.Empty;
-            }
-            else
-            {
-                return xmlNodeList[0].InnerText;
-            }
+            if (xmlNodeList.Count == 0 || xmlNodeList[0] == null) return string.Empty;
+
+            return xmlNodeList[0]?.InnerText ?? string.Empty;
         }
 
         private string GetFirstValueFromGivenXmlElement(string xmlElementName, string tagName)
         {
+            if (xmlDocument.DocumentElement == null) return string.Empty;
+
             XmlNodeList xmlNodeList = xmlDocument.DocumentElement.GetElementsByTagName(xmlElementName);
 
-            if (xmlNodeList.Count == 0)
-            {
-                return string.Empty;
-            }
-            else
-            {
-                XmlElement xmlElement = (XmlElement)xmlNodeList[0];
+            if (xmlNodeList.Count == 0 || xmlNodeList[0] == null) return string.Empty;
 
-                xmlNodeList = xmlElement.GetElementsByTagName(tagName);
+            XmlElement xmlElement = xmlNodeList[0] as XmlElement;
 
-                if (xmlNodeList.Count == 0)
-                {
-                    return string.Empty;
-                }
-                else
-                {
-                    return xmlNodeList[0].InnerText;
-                }
-            }
+            if (xmlElement == null) return string.Empty;
+
+            xmlNodeList = xmlElement.GetElementsByTagName(tagName);
+
+            if (xmlNodeList.Count == 0 || xmlNodeList[0] == null) return string.Empty;
+
+            return xmlNodeList[0]?.InnerText ?? string.Empty;
+        }
+
+        private const float MmToUserUnitFactor = 72.0f / 25.4f; // ≈ 2.834645669
+
+        /// <summary>
+        /// Converts millimeters to PDF user units (1/72 inch).
+        /// </summary>
+        /// <param name="mm">The value in millimeters.</param>
+        /// <returns>The equivalent value in PDF user units.</returns>
+        public static float ConvertMmToUserUnits(float mm)
+        {
+            return mm * MmToUserUnitFactor;
         }
 
     }

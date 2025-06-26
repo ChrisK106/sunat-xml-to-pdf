@@ -63,114 +63,30 @@ namespace XMLToPDFApp.Properties {
         /// <summary>
         ///   Busca una cadena traducida similar a &lt;!doctype html&gt;
         ///&lt;html lang=&quot;es&quot;&gt;
-        ///  &lt;head&gt;
-        ///  	&lt;meta charset=&quot;utf-8&quot;&gt;&lt;/meta&gt;
-        ///  	&lt;style type=&quot;text/css&quot;&gt;
-        ///  		
-        ///  		.data_header {
-        ///  			height: 100%;
-        ///  			border-collapse: collapse;
-        ///  			border: 1px solid black;
-        ///  			font-size: 15px;
-        ///  			padding: 8px;
-        ///  		}
+        ///	&lt;head&gt;
+        ///		&lt;meta charset=&quot;utf-8&quot;&gt;&lt;/meta&gt;
+        ///		&lt;style type=&quot;text/css&quot;&gt;
         ///
-        ///  		.doc_header_info td{
-        ///  			padding: 6px;
-        ///  		}
-        ///
-        ///  		table.border{
-        ///  			border-collapse: collapse;
-        ///  		}
-        ///
-        ///  		table.border th{
-        ///  			padding: 5px;
-        ///  			border: 1px solid black;
-        ///  		}
-        ///
-        ///  		table.border td{
-        ///  			padding: 5px;
-        ///  	 [resto de la cadena truncado]&quot;;.
+        ///			@page {
+        ///				size: A4;
+        ///				margin-top: @PAGE_MARGIN_TOPmm;
+        ///				margin-bottom: @PAGE_MARGIN_BOTTOMmm;
+        ///				margin-left: @PAGE_MARGIN_LEFTmm;
+        ///				margin-right: @PAGE_MARGIN_RIGHTmm;
+        ///			}
+        ///                                              
+        ///			body {
+        ///				font-family: Arial, Helvetica, sans-serif;
+        ///			}
+        ///			
+        ///			#doc-header {
+        ///				border-collapse: collapse;
+        ///				border: 1px solid black;
+        ///				font-size:  [resto de la cadena truncado]&quot;;.
         /// </summary>
         internal static string invoice_template {
             get {
                 return ResourceManager.GetString("invoice_template", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Busca una cadena traducida similar a &lt;!doctype html&gt;
-        ///&lt;html lang=&quot;es&quot;&gt;
-        ///  &lt;head&gt;
-        ///  	&lt;meta charset=&quot;utf-8&quot;&gt;&lt;/meta&gt;
-        ///  	&lt;style type=&quot;text/css&quot;&gt;
-        ///  		
-        ///  		.data_header {
-        ///  			height: 100%;
-        ///  			border-collapse: collapse;
-        ///  			border: 1px solid black;
-        ///  			font-size: 15px;
-        ///  			padding: 8px;
-        ///  		}
-        ///
-        ///  		.doc_header_info td{
-        ///  			padding: 6px;
-        ///  		}
-        ///
-        ///  		table.border{
-        ///  			border-collapse: collapse;
-        ///  		}
-        ///
-        ///  		table.border th{
-        ///  			padding: 5px;
-        ///  			border: 1px solid black;
-        ///  		}
-        ///
-        ///  		table.border td{
-        ///  			padding: 5px;
-        ///  	 [resto de la cadena truncado]&quot;;.
-        /// </summary>
-        internal static string invoice_template_with_credit_info {
-            get {
-                return ResourceManager.GetString("invoice_template_with_credit_info", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Busca una cadena traducida similar a &lt;!doctype html&gt;
-        ///&lt;html lang=&quot;es&quot;&gt;
-        ///  &lt;head&gt;
-        ///  	&lt;meta charset=&quot;utf-8&quot;&gt;&lt;/meta&gt;
-        ///  	&lt;style type=&quot;text/css&quot;&gt;
-        ///  		
-        ///  		.data_header {
-        ///  			height: 100%;
-        ///  			border-collapse: collapse;
-        ///  			border: 1px solid black;
-        ///  			font-size: 15px;
-        ///  			padding: 8px;
-        ///  		}
-        ///
-        ///  		.doc_header_info td{
-        ///  			padding: 6px;
-        ///  		}
-        ///
-        ///  		table.border{
-        ///  			border-collapse: collapse;
-        ///  		}
-        ///
-        ///  		table.border th{
-        ///  			padding: 5px;
-        ///  			border: 1px solid black;
-        ///  		}
-        ///
-        ///  		table.border td{
-        ///  			padding: 5px;
-        ///  	 [resto de la cadena truncado]&quot;;.
-        /// </summary>
-        internal static string receipt_template {
-            get {
-                return ResourceManager.GetString("receipt_template", resourceCulture);
             }
         }
     }
