@@ -22,14 +22,18 @@ Aplicación de escritorio para generar **PDFs personalizados** de facturación e
 - [.NET 8.0 Desktop Runtime x64](https://dotnet.microsoft.com/en-us/download/dotnet/8.0/runtime) (será instalado de no contar con la versión de .NET requerida)
 
 ## Capturas de la aplicación
-![XML-PDF_1 0 1](https://user-images.githubusercontent.com/46413807/158053000-a8ff0258-9263-446c-99f0-1316f8e39478.png)
-![Empresas_1 0 1](https://user-images.githubusercontent.com/46413807/158053003-29950a2a-8e4b-44b5-bf4a-e5bd9deec345.png)
+![XML-PDF_1 1 0](https://github.com/user-attachments/assets/8cc63191-a372-4953-a0cf-2e37cff23b7e)
+![Empresas_1 1 0](https://github.com/user-attachments/assets/f5669c94-2c3d-484c-99e2-433598282709)
+
+## Muestras de PDF generados
+![Factura_1 1 0](https://github.com/user-attachments/assets/bdf93f1d-a2a3-42bb-8393-761f732dc3ac)
+![Boleta_1 1 0](https://github.com/user-attachments/assets/6ac57901-8680-49df-ad56-402a8860d5c8)
 
 ## Dependencias
 
-- [iTextSharp](https://github.com/itext/itextsharp)
+- [iText](https://github.com/itext/itext-dotnet)
 
-[![iTextSharp](https://github.com/ChrisK106/sunat-xml-to-pdf/assets/46413807/8eade4a4-4c92-426c-b9c2-14d7f0629e91)](https://github.com/itext/itextsharp)
+[![iText](https://github.com/ChrisK106/sunat-xml-to-pdf/assets/46413807/8eade4a4-4c92-426c-b9c2-14d7f0629e91)](https://github.com/itext/itext-dotnet)
 
 - [Newtonsoft.Json](https://github.com/JamesNK/Newtonsoft.Json)
 
